@@ -9,8 +9,7 @@
 
 #include "pose_local_parameterization.h"
 
-bool PoseLocalParameterization::Plus(const double *x, const double *delta, double *x_plus_delta) const
-{
+bool PoseLocalParameterization::Plus(const double *x, const double *delta, double *x_plus_delta) const {
     Eigen::Map<const Eigen::Vector3d> _p(x);
     Eigen::Map<const Eigen::Quaterniond> _q(x + 3);
 
@@ -26,8 +25,8 @@ bool PoseLocalParameterization::Plus(const double *x, const double *delta, doubl
 
     return true;
 }
-bool PoseLocalParameterization::ComputeJacobian(const double *x, double *jacobian) const
-{
+
+bool PoseLocalParameterization::ComputeJacobian(const double *x, double *jacobian) const {
     Eigen::Map<Eigen::Matrix<double, 7, 6, Eigen::RowMajor>> j(jacobian);
     j.topRows<6>().setIdentity();
     j.bottomRows<1>().setZero();

@@ -5,76 +5,83 @@
 
 #include "camodocal/camera_models/Camera.h"
 
-namespace camodocal
-{
+namespace camodocal {
 
-class CameraCalibration
-{
-public:
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    CameraCalibration();
+    class CameraCalibration {
+    public:
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+        CameraCalibration();
 
-    CameraCalibration(Camera::ModelType modelType,
-                      const std::string& cameraName,
-                      const cv::Size& imageSize,
-                      const cv::Size& boardSize,
-                      float squareSize);
+        CameraCalibration(Camera::ModelType modelType,
+                          const std::string &cameraName,
+                          const cv::Size &imageSize,
+                          const cv::Size &boardSize,
+                          float squareSize);
 
-    void clear(void);
+        void clear(void);
 
-    void addChessboardData(const std::vector<cv::Point2f>& corners);
+        void addChessboardData(const std::vector<cv::Point2f> &corners);
 
-    bool calibrate(void);
+        bool calibrate(void);
 
-    int sampleCount(void) const;
-    std::vector<std::vector<cv::Point2f> >& imagePoints(void);
-    const std::vector<std::vector<cv::Point2f> >& imagePoints(void) const;
-    std::vector<std::vector<cv::Point3f> >& scenePoints(void);
-    const std::vector<std::vector<cv::Point3f> >& scenePoints(void) const;
-    CameraPtr& camera(void);
-    const CameraConstPtr camera(void) const;
+        int sampleCount(void) const;
 
-    Eigen::Matrix2d& measurementCovariance(void);
-    const Eigen::Matrix2d& measurementCovariance(void) const;
+        std::vector<std::vector<cv::Point2f> > &imagePoints(void);
 
-    cv::Mat& cameraPoses(void);
-    const cv::Mat& cameraPoses(void) const;
+        const std::vector<std::vector<cv::Point2f> > &imagePoints(void) const;
 
-    void drawResults(std::vector<cv::Mat>& images) const;
+        std::vector<std::vector<cv::Point3f> > &scenePoints(void);
 
-    void writeParams(const std::string& filename) const;
+        const std::vector<std::vector<cv::Point3f> > &scenePoints(void) const;
 
-    bool writeChessboardData(const std::string& filename) const;
-    bool readChessboardData(const std::string& filename);
+        CameraPtr &camera(void);
 
-    void setVerbose(bool verbose);
+        const CameraConstPtr camera(void) const;
 
-private:
-    bool calibrateHelper(CameraPtr& camera,
-                         std::vector<cv::Mat>& rvecs, std::vector<cv::Mat>& tvecs) const;
+        Eigen::Matrix2d &measurementCovariance(void);
 
-    void optimize(CameraPtr& camera,
-                  std::vector<cv::Mat>& rvecs, std::vector<cv::Mat>& tvecs) const;
+        const Eigen::Matrix2d &measurementCovariance(void) const;
 
-    template<typename T>
-    void readData(std::ifstream& ifs, T& data) const;
+        cv::Mat &cameraPoses(void);
 
-    template<typename T>
-    void writeData(std::ofstream& ofs, T data) const;
+        const cv::Mat &cameraPoses(void) const;
 
-    cv::Size m_boardSize;
-    float m_squareSize;
+        void drawResults(std::vector<cv::Mat> &images) const;
 
-    CameraPtr m_camera;
-    cv::Mat m_cameraPoses;
+        void writeParams(const std::string &filename) const;
 
-    std::vector<std::vector<cv::Point2f> > m_imagePoints;
-    std::vector<std::vector<cv::Point3f> > m_scenePoints;
+        bool writeChessboardData(const std::string &filename) const;
 
-    Eigen::Matrix2d m_measurementCovariance;
+        bool readChessboardData(const std::string &filename);
 
-    bool m_verbose;
-};
+        void setVerbose(bool verbose);
+
+    private:
+        bool calibrateHelper(CameraPtr &camera,
+                             std::vector<cv::Mat> &rvecs, std::vector<cv::Mat> &tvecs) const;
+
+        void optimize(CameraPtr &camera,
+                      std::vector<cv::Mat> &rvecs, std::vector<cv::Mat> &tvecs) const;
+
+        template<typename T>
+        void readData(std::ifstream &ifs, T &data) const;
+
+        template<typename T>
+        void writeData(std::ofstream &ofs, T data) const;
+
+        cv::Size m_boardSize;
+        float m_squareSize;
+
+        CameraPtr m_camera;
+        cv::Mat m_cameraPoses;
+
+        std::vector<std::vector<cv::Point2f> > m_imagePoints;
+        std::vector<std::vector<cv::Point3f> > m_scenePoints;
+
+        Eigen::Matrix2d m_measurementCovariance;
+
+        bool m_verbose;
+    };
 
 }
 

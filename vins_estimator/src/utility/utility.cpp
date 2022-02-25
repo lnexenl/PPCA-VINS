@@ -9,8 +9,7 @@
 
 #include "utility.h"
 
-Eigen::Matrix3d Utility::g2R(const Eigen::Vector3d &g)
-{
+Eigen::Matrix3d Utility::g2R(const Eigen::Vector3d &g) {
     Eigen::Matrix3d R0;
     Eigen::Vector3d ng1 = g.normalized();
     Eigen::Vector3d ng2{0, 0, 1.0};

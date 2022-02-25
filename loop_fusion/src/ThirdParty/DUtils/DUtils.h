@@ -33,8 +33,7 @@
 #define __D_UTILS__
 
 /// Several utilities for C++ programs
-namespace DUtils
-{
+namespace DUtils {
 }
 
 // Exception

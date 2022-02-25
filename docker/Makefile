@@ -10,7 +10,7 @@ help:
 	@echo ""
 
 build:
-	@docker build --tag ros:vins-fusion -f ./Dockerfile ..
+	@docker build --tag ros:vins-fusion -f ./Dockerfile .. --network host --build-arg http_proxy=http://127.0.0.1:10809 --build-arg https_proxy=http://127.0.0.1:10809
 
 clean:
 	@docker rmi -f ros:vins-fusion

@@ -47,35 +47,29 @@ int SHOW_TRACK;
 int FLOW_BACK;
 
 
-template <typename T>
-T readParam(ros::NodeHandle &n, std::string name)
-{
+template<typename T>
+T readParam(ros::NodeHandle &n, std::string name) {
     T ans;
-    if (n.getParam(name, ans))
-    {
+    if (n.getParam(name, ans)) {
         ROS_INFO_STREAM("Loaded " << name << ": " << ans);
-    }
-    else
-    {
+    } else {
         ROS_ERROR_STREAM("Failed to load " << name);
         n.shutdown();
     }
     return ans;
 }
 
-void readParameters(std::string config_file)
-{
-    FILE *fh = fopen(config_file.c_str(),"r");
-    if(fh == NULL){
+void readParameters(std::string config_file) {
+    FILE *fh = fopen(config_file.c_str(), "r");
+    if (fh == NULL) {
         ROS_WARN("config_file dosen't exist; wrong config_file path");
         ROS_BREAK();
-        return;          
+        return;
     }
     fclose(fh);
 
     cv::FileStorage fsSettings(config_file, cv::FileStorage::READ);
-    if(!fsSettings.isOpened())
-    {
+    if (!fsSettings.isOpened()) {
         std::cerr << "ERROR: Wrong path to settings" << std::endl;
     }
 
@@ -91,8 +85,7 @@ void readParameters(std::string config_file)
 
     USE_IMU = fsSettings["imu"];
     printf("USE_IMU: %d\n", USE_IMU);
-    if(USE_IMU)
-    {
+    if (USE_IMU) {
         fsSettings["imu_topic"] >> IMU_TOPIC;
         printf("IMU_TOPIC: %s\n", IMU_TOPIC.c_str());
         ACC_N = fsSettings["acc_n"];
@@ -114,17 +107,13 @@ void readParameters(std::string config_file)
     fout.close();
 
     ESTIMATE_EXTRINSIC = fsSettings["estimate_extrinsic"];
-    if (ESTIMATE_EXTRINSIC == 2)
-    {
+    if (ESTIMATE_EXTRINSIC == 2) {
         ROS_WARN("have no prior about extrinsic param, calibrate extrinsic param");
         RIC.push_back(Eigen::Matrix3d::Identity());
         TIC.push_back(Eigen::Vector3d::Zero());
         EX_CALIB_RESULT_PATH = OUTPUT_FOLDER + "/extrinsic_parameter.csv";
-    }
-    else 
-    {
-        if ( ESTIMATE_EXTRINSIC == 1)
-        {
+    } else {
+        if (ESTIMATE_EXTRINSIC == 1) {
             ROS_WARN(" Optimize extrinsic param around initial guess!");
             EX_CALIB_RESULT_PATH = OUTPUT_FOLDER + "/extrinsic_parameter.csv";
         }
@@ -137,13 +126,12 @@ void readParameters(std::string config_file)
         cv::cv2eigen(cv_T, T);
         RIC.push_back(T.block<3, 3>(0, 0));
         TIC.push_back(T.block<3, 1>(0, 3));
-    } 
-    
+    }
+
     NUM_OF_CAM = fsSettings["num_of_cam"];
     printf("camera number %d\n", NUM_OF_CAM);
 
-    if(NUM_OF_CAM != 1 && NUM_OF_CAM != 2)
-    {
+    if (NUM_OF_CAM != 1 && NUM_OF_CAM != 2) {
         printf("num_of_cam should be 1 or 2\n");
         assert(0);
     }
@@ -151,21 +139,20 @@ void readParameters(std::string config_file)
 
     int pn = config_file.find_last_of('/');
     std::string configPath = config_file.substr(0, pn);
-    
+
     std::string cam0Calib;
     fsSettings["cam0_calib"] >> cam0Calib;
     std::string cam0Path = configPath + "/" + cam0Calib;
     CAM_NAMES.push_back(cam0Path);
 
-    if(NUM_OF_CAM == 2)
-    {
+    if (NUM_OF_CAM == 2) {
         STEREO = 1;
         std::string cam1Calib;
         fsSettings["cam1_calib"] >> cam1Calib;
-        std::string cam1Path = configPath + "/" + cam1Calib; 
+        std::string cam1Path = configPath + "/" + cam1Calib;
         //printf("%s cam1 path\n", cam1Path.c_str() );
         CAM_NAMES.push_back(cam1Path);
-        
+
         cv::Mat cv_T;
         fsSettings["body_T_cam1"] >> cv_T;
         Eigen::Matrix4d T;
@@ -189,8 +176,7 @@ void readParameters(std::string config_file)
     COL = fsSettings["image_width"];
     ROS_INFO("ROW: %d COL: %d ", ROW, COL);
 
-    if(!USE_IMU)
-    {
+    if (!USE_IMU) {
         ESTIMATE_EXTRINSIC = 0;
         ESTIMATE_TD = 0;
         printf("no imu, fix extrinsic param; no time offset calibration\n");

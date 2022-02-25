@@ -5,33 +5,38 @@
 #include <eigen3/Eigen/Dense>
 #include <stdint.h>
 
-namespace camodocal
-{
+namespace camodocal {
 
-class Transform
-{
-public:
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    class Transform {
+    public:
+        EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    Transform();
-    Transform(const Eigen::Matrix4d& H);
+        Transform();
 
-    Eigen::Quaterniond& rotation(void);
-    const Eigen::Quaterniond& rotation(void) const;
-    double* rotationData(void);
-    const double* const rotationData(void) const;
+        Transform(const Eigen::Matrix4d &H);
 
-    Eigen::Vector3d& translation(void);
-    const Eigen::Vector3d& translation(void) const;
-    double* translationData(void);
-    const double* const translationData(void) const;
+        Eigen::Quaterniond &rotation(void);
 
-    Eigen::Matrix4d toMatrix(void) const;
+        const Eigen::Quaterniond &rotation(void) const;
 
-private:
-    Eigen::Quaterniond m_q;
-    Eigen::Vector3d m_t;
-};
+        double *rotationData(void);
+
+        const double *const rotationData(void) const;
+
+        Eigen::Vector3d &translation(void);
+
+        const Eigen::Vector3d &translation(void) const;
+
+        double *translationData(void);
+
+        const double *const translationData(void) const;
+
+        Eigen::Matrix4d toMatrix(void) const;
+
+    private:
+        Eigen::Quaterniond m_q;
+        Eigen::Vector3d m_t;
+    };
 
 }
 

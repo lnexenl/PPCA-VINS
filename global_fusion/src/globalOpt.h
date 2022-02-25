@@ -10,6 +10,7 @@
  *******************************************************/
 
 #pragma once
+
 #include <vector>
 #include <map>
 #include <iostream>
@@ -25,32 +26,38 @@
 
 using namespace std;
 
-class GlobalOptimization
-{
+class GlobalOptimization {
 public:
-	GlobalOptimization();
-	~GlobalOptimization();
-	void inputGPS(double t, double latitude, double longitude, double altitude, double posAccuracy);
-	void inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ);
-	void getGlobalOdom(Eigen::Vector3d &odomP, Eigen::Quaterniond &odomQ);
-	nav_msgs::Path global_path;
+    GlobalOptimization();
+
+    ~GlobalOptimization();
+
+    void inputGPS(double t, double latitude, double longitude, double altitude, double posAccuracy);
+
+    void inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ);
+
+    void getGlobalOdom(Eigen::Vector3d &odomP, Eigen::Quaterniond &odomQ);
+
+    nav_msgs::Path global_path;
 
 private:
-	void GPS2XYZ(double latitude, double longitude, double altitude, double* xyz);
-	void optimize();
-	void updateGlobalPath();
+    void GPS2XYZ(double latitude, double longitude, double altitude, double *xyz);
 
-	// format t, tx,ty,tz,qw,qx,qy,qz
-	map<double, vector<double>> localPoseMap;
-	map<double, vector<double>> globalPoseMap;
-	map<double, vector<double>> GPSPositionMap;
-	bool initGPS;
-	bool newGPS;
-	GeographicLib::LocalCartesian geoConverter;
-	std::mutex mPoseMap;
-	Eigen::Matrix4d WGPS_T_WVIO;
-	Eigen::Vector3d lastP;
-	Eigen::Quaterniond lastQ;
-	std::thread threadOpt;
+    void optimize();
+
+    void updateGlobalPath();
+
+    // format t, tx,ty,tz,qw,qx,qy,qz
+    map<double, vector<double>> localPoseMap;
+    map<double, vector<double>> globalPoseMap;
+    map<double, vector<double>> GPSPositionMap;
+    bool initGPS;
+    bool newGPS;
+    GeographicLib::LocalCartesian geoConverter;
+    std::mutex mPoseMap;
+    Eigen::Matrix4d WGPS_T_WVIO;
+    Eigen::Vector3d lastP;
+    Eigen::Quaterniond lastQ;
+    std::thread threadOpt;
 
 };

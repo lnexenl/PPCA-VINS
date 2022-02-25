@@ -34,8 +34,7 @@
 
 
 /// Computer vision functions
-namespace DVision
-{
+namespace DVision {
 }
 
 #include "BRIEF.h"

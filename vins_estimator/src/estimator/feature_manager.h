@@ -60,6 +60,9 @@ public:
 };
 
 class FeaturePerId {
+/// \brief stored different feature across frames.
+/// \param feature_per_frame same feature in different frames.
+/// \param start_frame first frame the feature appears.
 public:
     const int feature_id;
     int start_frame;
@@ -70,15 +73,14 @@ public:
 
     FeaturePerId(int _feature_id, int _start_frame)
             : feature_id(_feature_id), start_frame(_start_frame),
-              used_num(0), estimated_depth(-1.0), solve_flag(0) {
-    }
+              used_num(0), estimated_depth(-1.0), solve_flag(0) {}
 
     int endFrame();
 };
 
 class FeatureManager {
 public:
-    FeatureManager(Matrix3d _Rs[]);
+    explicit FeatureManager(Matrix3d _Rs[]);
 
     void setRic(Matrix3d _ric[]);
 

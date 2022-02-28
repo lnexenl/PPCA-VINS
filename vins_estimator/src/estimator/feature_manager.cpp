@@ -44,6 +44,7 @@ int FeatureManager::getFeatureCount() {
 bool FeatureManager::addFeatureCheckParallax(int frame_count,
                                              const map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> &image,
                                              double td) {
+    /// \brief check whether a frame is a keyframe.
     ROS_DEBUG("input feature: %d", (int) image.size());
     ROS_DEBUG("num of feature: %d", getFeatureCount());
     double parallax_sum = 0;
@@ -64,7 +65,7 @@ bool FeatureManager::addFeatureCheckParallax(int frame_count,
         auto it = find_if(feature.begin(), feature.end(),
                           [feature_id](const FeaturePerId &it) { return it.feature_id == feature_id; });
 
-        if (it == feature.end()) {
+        if (it == feature.end()) { // new feature, insert.
             feature.emplace_back(feature_id, frame_count);
             feature.back().feature_per_frame.push_back(f_per_fra);
             new_feature_num++;
@@ -78,6 +79,7 @@ bool FeatureManager::addFeatureCheckParallax(int frame_count,
 
     //if (frame_count < 2 || last_track_num < 20)
     //if (frame_count < 2 || last_track_num < 20 || new_feature_num > 0.5 * last_track_num)
+    //too few features, set a new keyframe.
     if (frame_count < 2 || last_track_num < 20 || long_track_num < 40 || new_feature_num > 0.5 * last_track_num)
         return true;
 
@@ -91,7 +93,7 @@ bool FeatureManager::addFeatureCheckParallax(int frame_count,
 
     if (parallax_num == 0) {
         return true;
-    } else {
+    } else { // big enough parallex, add new frame.
         ROS_DEBUG("parallax_sum: %lf, parallax_num: %d", parallax_sum, parallax_num);
         ROS_DEBUG("current parallax: %lf", parallax_sum / parallax_num * FOCAL_LENGTH);
         last_average_parallax = parallax_sum / parallax_num * FOCAL_LENGTH;

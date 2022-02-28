@@ -26,6 +26,9 @@ double distance(cv::Point2f pt1, cv::Point2f pt2) {
 }
 
 void reduceVector(vector<cv::Point2f> &v, vector<uchar> status) {
+/*!
+ * @brief remove unused item in v, tagged by status.
+ */
     int j = 0;
     for (int i = 0; i < int(v.size()); i++)
         if (status[i])
@@ -34,6 +37,9 @@ void reduceVector(vector<cv::Point2f> &v, vector<uchar> status) {
 }
 
 void reduceVector(vector<int> &v, vector<uchar> status) {
+/*!
+ * @brief remove unused item in v, tagged by status.
+ */
     int j = 0;
     for (int i = 0; i < int(v.size()); i++)
         if (status[i])

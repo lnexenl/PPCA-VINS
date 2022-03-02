@@ -481,7 +481,7 @@ namespace camodocal {
         double error = std::numeric_limits<double>::max();
 
         int max_cnt = 8; // 5
-        int min_error = 0.01;
+        double min_error = 0.01;
         for (int j = 0;; j++) {
             if (j > max_cnt)
                 break;

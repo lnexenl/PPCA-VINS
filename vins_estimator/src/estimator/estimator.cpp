@@ -515,6 +515,7 @@ Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<double, 7,
 }
 
 bool Estimator::initialStructure() {
+    /// \brief use sfm to initialize (Mono + IMU)
     TicToc t_sfm;
     //check imu observibility
     {
@@ -534,7 +535,7 @@ bool Estimator::initialStructure() {
             var += (tmp_g - aver_g).transpose() * (tmp_g - aver_g);
             //cout << "frame g " << tmp_g.transpose() << endl;
         }
-        var = sqrt(var / ((int) all_image_frame.size() - 1));
+        var = sqrt(var / ((int) all_image_frame.size() - 1));//calculate IMU accelerates variation.
         //ROS_WARN("IMU variation %f!", var);
         if (var < 0.25) {
             ROS_INFO("IMU excitation not enouth!");
@@ -558,6 +559,7 @@ bool Estimator::initialStructure() {
         }
         sfm_f.push_back(tmp_feature);
     }
+    //find a frame with enough features and parallax.
     Matrix3d relative_R;
     Vector3d relative_T;
     int l;
@@ -714,6 +716,7 @@ bool Estimator::relativePose(Matrix3d &relative_R, Vector3d &relative_T, int &l)
             }
             average_parallax = 1.0 * sum_parallax / int(corres.size());
             if (average_parallax * 460 > 30 && m_estimator.solveRelativeRT(corres, relative_R, relative_T)) {
+                //enough parallax and successfully solved R&T
                 l = i;
                 ROS_DEBUG("average_parallax %f choose l %d and newest frame to triangulate the whole structure",
                           average_parallax * 460, l);

@@ -34,7 +34,7 @@ bool GlobalSFM::solveFrameByPnP(Matrix3d &R_initial, Vector3d &P_initial, int i,
     vector<cv::Point2f> pts_2_vector;
     vector<cv::Point3f> pts_3_vector;
     for (int j = 0; j < feature_num; j++) {
-        if (sfm_f[j].state != true)
+        if (!sfm_f[j].state)
             continue;
         Vector2d point2d;
         for (int k = 0; k < (int) sfm_f[j].observation.size(); k++) {
@@ -190,7 +190,7 @@ bool GlobalSFM::construct(int frame_num, Quaterniond *q, Vector3d *T, int l,
     }
     //5: triangulate all other points
     for (int j = 0; j < feature_num; j++) {
-        if (sfm_f[j].state == true)
+        if (sfm_f[j].state)
             continue;
         if ((int) sfm_f[j].observation.size() >= 2) {
             Vector2d point0, point1;
@@ -245,7 +245,7 @@ bool GlobalSFM::construct(int frame_num, Quaterniond *q, Vector3d *T, int l,
     }
 
     for (int i = 0; i < feature_num; i++) {
-        if (sfm_f[i].state != true)
+        if (!sfm_f[i].state)
             continue;
         for (int j = 0; j < int(sfm_f[i].observation.size()); j++) {
             int l = sfm_f[i].observation[j].first;

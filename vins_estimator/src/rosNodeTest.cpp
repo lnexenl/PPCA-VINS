@@ -20,6 +20,7 @@
 #include "estimator/estimator.h"
 #include "estimator/parameters.h"
 #include "utility/visualization.h"
+#include "utility/gt_visualization.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
@@ -29,7 +30,8 @@ queue<sensor_msgs::ImuConstPtr> imu_buf;
 queue<sensor_msgs::PointCloudConstPtr> feature_buf;
 queue<sensor_msgs::ImageConstPtr> img0_buf;
 queue<sensor_msgs::ImageConstPtr> img1_buf;
-std::mutex m_buf;
+extern queue<nav_msgs::OdometryConstPtr> gt_odom_buf;
+std::mutex m_buf, m_gt_odom_buf;
 
 
 void img0_callback(const sensor_msgs::ImageConstPtr &img_msg) {
@@ -42,6 +44,10 @@ void img1_callback(const sensor_msgs::ImageConstPtr &img_msg) {
     m_buf.lock();
     img1_buf.push(img_msg);
     m_buf.unlock();
+}
+
+void gt_odom_callback(const nav_msgs::OdometryConstPtr &odom_msg) {
+    gt_odom_buf.push(odom_msg);
 }
 
 
@@ -220,8 +226,9 @@ int main(int argc, char **argv) {
     ROS_WARN("waiting for image and imu...");
 
     registerPub(n);
+    registerGTPub(n);
 
-    ros::Subscriber sub_imu;
+    ros::Subscriber sub_imu, sub_gt_odom;
     if (USE_IMU)
         sub_imu = n.subscribe(IMU_TOPIC, 2000, imu_callback, ros::TransportHints().tcpNoDelay());
 //    ros::Subscriber sub_feature = n.subscribe("/feature_tracker/feature", 2000, feature_callback);
@@ -232,6 +239,12 @@ int main(int argc, char **argv) {
     ros::Subscriber sub_restart = n.subscribe("/vins_restart", 100, restart_callback);
     ros::Subscriber sub_imu_switch = n.subscribe("/vins_imu_switch", 100, imu_switch_callback);
     ros::Subscriber sub_cam_switch = n.subscribe("/vins_cam_switch", 100, cam_switch_callback);
+
+    if (PUB_GT) {
+        sub_gt_odom = n.subscribe("/airsim_node/car/odom_local_ned", 2000, gt_odom_callback,
+                                                  ros::TransportHints().tcpNoDelay());
+//        printf("GT_ODOM_TOPIC:%s\n", GT_ODOM_TOPIC.c_str());
+    }
 
     std::thread sync_thread{sync_process};
     ros::spin();

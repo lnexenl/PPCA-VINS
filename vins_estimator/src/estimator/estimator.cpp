@@ -9,6 +9,7 @@
 
 #include "estimator.h"
 #include "../utility/visualization.h"
+#include "../utility/gt_visualization.h"
 
 Estimator::Estimator() : f_manager{Rs} {
     ROS_INFO("init begins");
@@ -286,6 +287,7 @@ void Estimator::processMeasurements() {
             header.frame_id = "world";
             header.stamp = ros::Time(feature.first);
 
+            pubGTPath(header.stamp);
             pubOdometry(*this, header);
             pubKeyPoses(*this, header);
             pubCameraPose(*this, header);

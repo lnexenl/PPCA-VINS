@@ -35,6 +35,8 @@ double TD;
 int NUM_OF_CAM;
 int STEREO;
 int USE_IMU;
+int PUB_GT;
+std::string GT_ODOM_TOPIC;
 int MULTIPLE_THREAD;
 map<int, Eigen::Vector3d> pts_gt;
 std::string IMAGE0_TOPIC, IMAGE1_TOPIC;
@@ -93,6 +95,14 @@ void readParameters(std::string config_file) {
         GYR_N = fsSettings["gyr_n"];
         GYR_W = fsSettings["gyr_w"];
         G.z() = fsSettings["g_norm"];
+    }
+
+
+    PUB_GT = fsSettings["groundtruth"];
+    printf("PUB_GT: %d\n", PUB_GT);
+    if (PUB_GT) {
+        fsSettings["gt_odom"] >> GT_ODOM_TOPIC;
+        printf("GROUNDTRUTH ODOM TOPIC: %s\n", GT_ODOM_TOPIC.c_str());
     }
 
     SOLVER_TIME = fsSettings["max_solver_time"];

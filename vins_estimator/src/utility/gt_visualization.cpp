@@ -22,7 +22,7 @@ void pubGTPath(ros::Time simT) {
     while (!gt_odom_buf.empty()) {
         it = gt_odom_buf.front();
 
-        ROS_WARN("simT:%lf, odom_stamp:%lf", simT.toSec(), it->header.stamp.toSec());
+//        ROS_WARN("simT:%lf, odom_stamp:%lf", simT.toSec(), it->header.stamp.toSec());
         if (it->header.stamp <= simT) {
             geometry_msgs::PoseStamped pose_stamped;
             pose_stamped.header = it->header;

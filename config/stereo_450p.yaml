@@ -8,14 +8,14 @@ groundtruth: 1
 
 gt_odom: "/airsim_node/car/odom_local_ned"
 imu_topic: "/airsim_node/car/imu/Imu"
-image0_topic: "/airsim_node/car/left/Scene_360p"
-image1_topic: "/airsim_node/car/right/Scene_360p"
+image0_topic: "/airsim_node/car/left/Scene_450p"
+image1_topic: "/airsim_node/car/right/Scene_450p"
 output_path: "~/output/"
 
-cam0_calib: "cam_360p.yaml"
-cam1_calib: "cam_360p.yaml"
-image_width: 640
-image_height: 360
+cam0_calib: "cam_450p.yaml"
+cam1_calib: "cam_450p.yaml"
+image_width: 800
+image_height: 450
 
 
 # Extrinsic parameter between IMU and Camera.
@@ -44,7 +44,7 @@ body_T_cam1: !!opencv-matrix
 multiple_thread: 1
 
 #feature traker paprameters
-max_cnt: 150            # max feature number in feature tracking
+max_cnt: 100            # max feature number in feature tracking
 min_dist: 30            # min distance between two features
 freq: 10                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image
 F_threshold: 1.0        # ransac threshold (pixel)

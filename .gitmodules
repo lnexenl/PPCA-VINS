@@ -1,3 +1,6 @@
 [submodule "depth_pred/scripts/AnyNet"]
 	path = depth_pred/scripts/AnyNet
 	url = https://github.com/mileyan/AnyNet.git
+[submodule "depth_pred"]
+	path = depth_pred
+	url = git@github.com:lnexenl/depth_pred.git

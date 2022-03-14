@@ -1,4 +1,4 @@
----
+
 # clang-format documentation
 # http://clang.llvm.org/docs/ClangFormat.html
 # http://clang.llvm.org/docs/ClangFormatStyleOptions.html
@@ -28,7 +28,7 @@ BraceWrapping:
   AfterClass: true
   AfterControlStatement: Never
   AfterEnum: true
-  AfterFunction: true
+  AfterFunction: false
   AfterNamespace: true
   AfterObjCDeclaration: false
   AfterStruct: true
@@ -53,4 +53,3 @@ SortIncludes: Never
 SpaceAfterTemplateKeyword: true
 # Standard: Cpp11 # Broken
 UseTab: Never
-...

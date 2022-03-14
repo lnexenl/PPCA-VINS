@@ -18,10 +18,10 @@ find_package(Eigen3)
 catkin_package()
 
 include_directories(${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
-include_directories(../vins_estimator/src/utility ../vins_estimator/src/estimator)
+include_directories(../vins_estimator/src/utility include)
 include_directories(../camera_models/include)
 
-add_executable(depth_pred_node src/depth_pred_node.cpp)
-target_link_libraries(depth_pred_node vins_lib ${catkin_LIBRARIES})
+add_executable(depth_pred_node src/depth_pred_node.cpp include/depth_pred_node.h)
+target_link_libraries(depth_pred_node ${catkin_LIBRARIES})
 
 

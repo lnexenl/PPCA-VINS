@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 
 import argparse
 import torch
@@ -90,10 +90,10 @@ args = parser.parse_args()
 
 rospy.init_node("depth_pred_node", anonymous=True)
 
-left_img_sub = rospy.Subscriber("/airsim_node/car/left/Scene_450p", Image, left_img_cb)
-right_img_sub = rospy.Subscriber("/airsim_node/car/right/Scene_450p", Image, right_img_cb)
+left_img_sub = rospy.Subscriber("/depth_img/left", Image, left_img_cb)
+right_img_sub = rospy.Subscriber("/depth_img/right", Image, right_img_cb)
 
-depth_pub = rospy.Publisher("/airsim_node/car/left/Depth", Image, queue_size=1)
+depth_pub = rospy.Publisher("/airsim_node/car/left/depth", Image, queue_size=1)
 
 log = logger.setup_logger(args.save_path + '/training.log')
 transform = preprocess.get_transform(augment=False)

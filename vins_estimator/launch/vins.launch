@@ -1,0 +1,3 @@
+<launch>
+    <node name="vins_estimator" pkg="vins" type="vins_node" output="log" args="/home/lnex/work/vins/src/VINS-Fusion/config/stereo_450p.yaml"/>
+</launch>

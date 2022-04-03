@@ -5,13 +5,14 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Axes1
+        - /LoopGroup1
+        - /LoopGroup1/loopPath1
         - /VIOGroup1/HistoryPointCloud1
         - /GlobalGroup1/GloablPath1
         - /GlobalGroup1/CarModel1
         - /GlobalGroup1/GroundTruthPath1
-        - /PointCloud21
-        - /PointCloud22
-        - /PointCloud22/Status1
+        - /Path1
       Splitter Ratio: 0.4651159942150116
     Tree Height: 845
   - Class: rviz/Selection
@@ -68,7 +69,7 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/Axes
       Enabled: true
-      Length: 0.5
+      Length: 1
       Name: Axes
       Radius: 0.05000000074505806
       Reference Frame: <Fixed Frame>
@@ -251,8 +252,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 24.692792892456055
-            Min Value: -2.1780331134796143
+            Max Value: 16.587202072143555
+            Min Value: 0.25023534893989563
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -353,8 +354,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 29.253803253173828
-        Min Value: -2.3776938915252686
+        Max Value: 20.86347770690918
+        Min Value: -7.870145797729492
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -362,7 +363,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: AxisColor
       Decay Time: 20
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -377,7 +378,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Class: rviz/Image
       Enabled: false
       Image Topic: /airsim_node/car/left/depth
@@ -417,8 +418,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 15.534571647644043
-        Min Value: -2.340510368347168
+        Max Value: 23.195592880249023
+        Min Value: -12.628314971923828
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -442,6 +443,54 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 69; 0; 103
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: GT Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /vins_estimator/gt_path
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 255; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /ndt_path
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
@@ -468,7 +517,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 15.474623680114746
+      Distance: 7.642470359802246
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -476,17 +525,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 8.350574493408203
-        Y: 24.133359909057617
-        Z: 62.205711364746094
+        X: -0.5756044387817383
+        Y: -17.454797744750977
+        Z: 65.01892852783203
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6247963905334473
+      Pitch: 1.1597965955734253
       Target Frame: world
-      Yaw: 2.3704748153686523
+      Yaw: 3.365473508834839
     Saved: ~
 Window Geometry:
   Displays:

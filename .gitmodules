@@ -4,3 +4,6 @@
 [submodule "depth_pred"]
 	path = depth_pred
 	url = git@github.com:lnexenl/depth_pred.git
+[submodule "prior_fusion"]
+	path = prior_fusion
+	url = git@github.com:lnexenl/prior_fusion.git

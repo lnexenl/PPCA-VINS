@@ -1,11 +1,48 @@
-# VINS-Fusion
-## An optimization-based multi-sensor state estimator
+# Stereo-VPCCD
+
+## An Pointcloud Change Detection pipeline based on VINS-Fusion
+
+## 1.Prerequisites
+
+You can use any Linux distros as you like, most of the prerequisites are same with VINS-Fusion.
+
+### 1.1 **Linux** and **ROS**
+
+Ubuntu 20.04 recommended, cause this project switch the OpenCV major version from 3 to 4, and
+ROS Noetic is the first ROS 1 distro integrated with OpenCV 4.
+
+### 1.2 Ceres Solver
+
+If you use Ubuntu 20.04, simply do:`sudo apt install libceres* -y`.
+Manually installation please follow [Ceres Installation](http://ceres-solver.org/installation.html).
+
+### 1.3 PointCloud Library(PCL)
+
+I think pcl version 1.10 will be a good choice. If you are using Ubuntu 20.04, `sudo apt install libpcl-dev -y`
+will do that. Else follow [PCL](https://github.com/PointCloudLibrary/pcl). Version lower than 1.10 may works, but v1.12
+never works.
+
+**MAKE SURE YOU INSTALL RIGHT VERSION BEFORE NEXT STEP.**
+
+Cause FAST-GICP will run into bug if you use a higher version of pcl.
+
+### 1.4 FAST-GICP
+
+Follow [fast_gicp](https://github.com/SMRT-AIST/fast_gicp), follow the installation with ros.
+
+
+____
 
 <img src="https://github.com/HKUST-Aerial-Robotics/VINS-Fusion/blob/master/support_files/image/vins_logo.png" width = 55% height = 55% div align=left />
 <img src="https://github.com/HKUST-Aerial-Robotics/VINS-Fusion/blob/master/support_files/image/kitti.png" width = 34% height = 34% div align=center />
 
-VINS-Fusion is an optimization-based multi-sensor state estimator, which achieves accurate self-localization for autonomous applications (drones, cars, and AR/VR). VINS-Fusion is an extension of [VINS-Mono](https://github.com/HKUST-Aerial-Robotics/VINS-Mono), which supports multiple visual-inertial sensor types (mono camera + IMU, stereo cameras + IMU, even stereo cameras only). We also show a toy example of fusing VINS with GPS. 
+VINS-Fusion is an optimization-based multi-sensor state estimator, which achieves accurate self-localization for
+autonomous applications (drones, cars, and AR/VR). VINS-Fusion is an extension
+of [VINS-Mono](https://github.com/HKUST-Aerial-Robotics/VINS-Mono), which supports multiple visual-inertial sensor
+types (mono camera + IMU, stereo cameras + IMU, even stereo cameras only). We also show a toy example of fusing VINS
+with GPS.
 **Features:**
+
 - multiple sensors support (stereo cameras / mono camera+IMU / stereo cameras+IMU)
 - online spatial calibration (transformation between camera and IMU)
 - online temporal calibration (time offset between camera and IMU)

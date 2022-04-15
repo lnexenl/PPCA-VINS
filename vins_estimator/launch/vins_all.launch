@@ -1,0 +1,12 @@
+<launch>
+    <node name="vins_estimator" pkg="vins" type="vins_node" output="log" args="$(find vins)/../config/stereo_450p.yaml"/>
+     <node name="priorOptNode" pkg="prior_fusion" type="prior_fusion_node">
+        <param name="resultDir" type="str" value="$(find vins)/../result/1"/>
+    </node>
+    <node name="depth_pred_node" pkg="prior_locate" type="prior_locate_node" launch-prefix="gdb -ex run --args">
+        <param name="priorMapFile" type="str" value="/home/lnex/pcd/prior/4x.pcd"/>
+        <param name="resultDir" type="str" value="$(find vins)/../result/1"/>
+        <param name="confFile" type="str" value="$(find vins)/../config/stereo_450p.yaml"/>
+    </node>
+<!--     <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find vins)/../config/vins_rviz_config.rviz" /> -->
+</launch>

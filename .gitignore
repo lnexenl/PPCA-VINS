@@ -16,3 +16,4 @@ camera_camera_calib.yaml
 camera_chessboard_data.dat
 *.log
 .idea/
+**/result

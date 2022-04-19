@@ -11,12 +11,18 @@ You can use any Linux distros as you like, most of the prerequisites are same wi
 Ubuntu 20.04 recommended, cause this project switch the OpenCV major version from 3 to 4, and
 ROS Noetic is the first ROS 1 distro integrated with OpenCV 4.
 
-### 1.2 Ceres Solver
+### 1.2 C++ Compiler
+
+This project is written with C++ 17 standard. So you need a C++ compiler which supports C++ 17. Reference to
+[C++ Compiler Support](https://en.cppreference.com/w/cpp/compiler_support) to get a proper compiler. (e.g. gcc 11 or
+clang 13)
+
+### 1.3 Ceres Solver
 
 If you use Ubuntu 20.04, simply do:`sudo apt install libceres* -y`.
 Manually installation please follow [Ceres Installation](http://ceres-solver.org/installation.html).
 
-### 1.3 PointCloud Library(PCL)
+### 1.4 PointCloud Library(PCL)
 
 I think pcl version 1.10 will be a good choice. If you are using Ubuntu 20.04, `sudo apt install libpcl-dev -y`
 will do that. Else follow [PCL](https://github.com/PointCloudLibrary/pcl). Version lower than 1.10 may works, but v1.12
@@ -26,7 +32,7 @@ never works.
 
 Cause FAST-GICP will run into bug if you use a higher version of pcl.
 
-### 1.4 FAST-GICP
+### 1.5 FAST-GICP
 
 Follow [fast_gicp](https://github.com/SMRT-AIST/fast_gicp), follow the installation with ros.
 

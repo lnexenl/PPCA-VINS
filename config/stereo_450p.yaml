@@ -16,6 +16,7 @@ cam0_calib: "cam_450p.yaml"
 cam1_calib: "cam_450p.yaml"
 image_width: 800
 image_height: 450
+baseline_length: 1.0
 
 
 # Extrinsic parameter between IMU and Camera.
@@ -41,8 +42,10 @@ body_T_cam1: !!opencv-matrix
           0.0, 0.0, 0.0, 1.0 ]
 
 #Stereo depth parameters
-depth_threshold: 0.2
-validate_frames: 3
+prior_locate:
+  depth_threshold: 0.2
+  pointcloud: "/home/lnex/pcd/origin_processed_4x.pcd"
+
 
 #Multiple thread support
 multiple_thread: 1

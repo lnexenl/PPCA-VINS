@@ -4,7 +4,7 @@ project(vins)
 set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS "-std=c++17 -march=native")
 #-DEIGEN_USE_MKL_ALL")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g -msse -msse2 -msse3")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3  -g -msse -msse2 -msse3 -Wno-deprecated-declarations -ftrack-macro-expansion=0 -fno-diagnostics-show-caret")
 
 find_package(catkin REQUIRED COMPONENTS
         roscpp

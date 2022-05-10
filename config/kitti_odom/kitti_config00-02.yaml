@@ -13,6 +13,7 @@ cam0_calib: "cam00-02.yaml"
 cam1_calib: "cam00-02.yaml"
 image_width: 1241
 image_height: 376
+baseline_length: 0.5372
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
@@ -35,6 +36,11 @@ body_T_cam1: !!opencv-matrix
           0, 1, 0, 0,
           0, 0, 1, 0,
           0, 0, 0, 1 ]
+
+#Stereo depth parameters
+prior_locate:
+  depth_threshold: 0.2
+  pointcloud: "/home/lnex/KITTI/dataset/kitti_sequence_00.pcd"
 
 #Multiple thread support
 multiple_thread: 0

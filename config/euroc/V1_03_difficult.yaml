@@ -8,7 +8,7 @@ num_of_cam: 2
 imu_topic: "/imu0"
 image0_topic: "/cam0/image_rect"
 image1_topic: "/cam1/image_rect"
-output_path: "/home/lnex/vins_out/V1_01_easy"
+output_path: "/home/lnex/vins_out/V1_03_difficult"
 
 cam0_calib: "cam_pinhole.yaml"
 cam1_calib: "cam_pinhole.yaml"
@@ -61,12 +61,26 @@ body_T_cam1: !!opencv-matrix
 #Stereo depth parameters
 prior_locate:
   depth_threshold: 0.2
-  pointcloud: "/home/lnex/pcd/V1_01_0.02.pcd"
+  pointcloud: "/home/lnex/pcd/V1_03_0.02.pcd"
   clip_range:
     x: 0.4
     y: 0.4
     z: 0.4
   voxel_grid_size: 0.02
+
+  #translation in XYZ(meters)
+  init_tran: !!opencv-matrix
+    rows: 1
+    cols: 3
+    dt: f
+    data: [ 0.898029,2.028208,0.955711 ]
+  #quaternion in wxyz
+  init_quat: !!opencv-matrix
+    rows: 1
+    cols: 4
+    dt: f
+    data: [ 0.999, 0.0, 0.03, 0.03 ]
+
 #Multiple thread support
 multiple_thread: 1
 

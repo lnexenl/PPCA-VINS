@@ -241,13 +241,14 @@ void GlobalOptimization::optimize() {
 void GlobalOptimization::updateGlobalPath() {
     global_path.poses.clear();
     map<double, vector<double>>::iterator iter;
+    vector<double> f = globalPoseMap.begin()->second;
     for (iter = globalPoseMap.begin(); iter != globalPoseMap.end(); iter++) {
         geometry_msgs::PoseStamped pose_stamped;
         pose_stamped.header.stamp = ros::Time(iter->first);
         pose_stamped.header.frame_id = "world";
-        pose_stamped.pose.position.x = iter->second[0];
-        pose_stamped.pose.position.y = iter->second[1];
-        pose_stamped.pose.position.z = iter->second[2];
+        pose_stamped.pose.position.x = iter->second[0] - f[0];
+        pose_stamped.pose.position.y = iter->second[1] - f[1];
+        pose_stamped.pose.position.z = iter->second[2] - f[2];
         pose_stamped.pose.orientation.w = iter->second[3];
         pose_stamped.pose.orientation.x = iter->second[4];
         pose_stamped.pose.orientation.y = iter->second[5];

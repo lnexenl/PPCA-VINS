@@ -11,6 +11,7 @@
 
 #include <ros/ros.h>
 #include <vector>
+#include <boost/filesystem.hpp>
 #include <eigen3/Eigen/Dense>
 #include "../utility/utility.h"
 #include <opencv2/opencv.hpp>

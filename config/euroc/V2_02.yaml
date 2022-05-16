@@ -42,6 +42,9 @@ body_T_cam1: !!opencv-matrix
 
 #Stereo depth parameters
 prior_locate:
+  fitness_threshold: 0.01
+  reg_trans_threshold: 0.4
+  var_factor: 1000
   max_depth: 3
   validate_frames: 4
   depth_threshold: 0.1

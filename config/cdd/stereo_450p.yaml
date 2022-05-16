@@ -10,7 +10,7 @@ gt_odom: "/airsim_node/car/odom_local_ned"
 imu_topic: "/airsim_node/car/imu/Imu"
 image0_topic: "/airsim_node/car/left/Scene_450p"
 image1_topic: "/airsim_node/car/right/Scene_450p"
-output_path: "~/output/"
+output_path: "/home/lnex/vins_out/1"
 
 cam0_calib: "cam_450p.yaml"
 cam1_calib: "cam_450p.yaml"
@@ -43,15 +43,18 @@ body_T_cam1: !!opencv-matrix
 
 #Stereo depth parameters
 prior_locate:
+  fitness_threshold: 0.5
+  reg_trans_threshold: 2.0
+  var_factor: 20000
   max_depth: 50
   validate_frames: 4
-  depth_threshold: 0.6
+  depth_threshold: 0.5
   pointcloud: "/home/lnex/pcd/origin_processed_4x.pcd"
   clip_range:
-    x: 3
-    y: 3
-    z: 3
-  voxel_grid_size: 0.04
+    x: 5
+    y: 5
+    z: 5
+  voxel_grid_size: 0.4
 
   #translation in XYZ(meters)
   init_tran: !!opencv-matrix

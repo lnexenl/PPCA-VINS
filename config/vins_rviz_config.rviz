@@ -9,7 +9,7 @@ Panels:
         - /GlobalGroup1/CarModel1
         - /GlobalGroup1/GroundTruthPath1
         - /PriorGroup1
-        - /PriorGroup1/PointCloud21
+        - /PriorGroup1/Pointcloud after filter1
       Splitter Ratio: 0.5038910508155823
     Tree Height: 679
   - Class: rviz/Selection
@@ -377,8 +377,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 0.7206128239631653
-            Min Value: -1.0081796646118164
+            Max Value: 16.871122360229492
+            Min Value: -0.5695575475692749
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -395,9 +395,9 @@ Visualization Manager:
           Queue Size: 10
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.019999999552965164
+          Size (m): 0.03999999910593033
           Style: Flat Squares
-          Topic: /prior_opt_node/filtered_pc
+          Topic: /prior_locate_node/filtered_pc
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
@@ -441,8 +441,8 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 20.86347770690918
-            Min Value: -7.870145797729492
+            Max Value: 1.9999871253967285
+            Min Value: -1.3758761882781982
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -450,7 +450,7 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: AxisColor
           Decay Time: 20
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Min Color: 0; 0; 0
@@ -461,11 +461,11 @@ Visualization Manager:
           Size (Pixels): 3
           Size (m): 0.20000000298023224
           Style: Flat Squares
-          Topic: /local_pc
+          Topic: /prior_locate_node/local_pc
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: true
+          Value: false
       Enabled: true
       Name: PriorGroup
   Enabled: true
@@ -493,20 +493,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 3.6449995040893555
-      Class: rviz/TopDownOrtho
+      Class: rviz/Orbit
+      Distance: 171.59088134765625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
+      Focal Point:
+        X: 9.007711410522461
+        Y: -7.982043266296387
+        Z: -3.8382275104522705
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 176.67367553710938
+      Pitch: 0.7647968530654907
       Target Frame: world
-      X: -1.3485493659973145
-      Y: -0.15934345126152039
+      Yaw: 3.4131863117218018
     Saved: ~
 Window Geometry:
   Displays:

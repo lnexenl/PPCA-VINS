@@ -9,7 +9,7 @@ config=$1
 bag=$2
 runs=$3
 
-for i in {1..${runs}}
+for i in $( seq 1 $runs )
 do
 echo "the ${i} time run"
 tmux new -d "rosrun vins vins_node $config"
@@ -21,6 +21,8 @@ tmux new -d "rosrun prior_fusion prior_fusion_node $config"
 # wait for all nodes to start
 sleep 8
 
-rosbag play ${bag} && rosnode kill /prior_locate_node /prior_opt_node /vins_estimator
+rosbag play ${bag}
+sleep 10
+rosnode kill /prior_locate_node /prior_opt_node /vins_estimator
 sleep 5
 done

@@ -8,7 +8,7 @@ num_of_cam: 2
 imu_topic: "/imu0"
 image0_topic: "/cam0/image_rect"
 image1_topic: "/cam1/image_rect"
-output_path: "/home/lnex/vins_out/V1_03_difficult"
+output_path: "/home/lnex/vins_out/V2_03_difficult"
 
 cam0_calib: "cam_pinhole.yaml"
 cam1_calib: "cam_pinhole.yaml"
@@ -20,24 +20,6 @@ baseline_length: 0.1095
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
 # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
-
-#body_T_cam0: !!opencv-matrix
-#  rows: 4
-#  cols: 4
-#  dt: d
-#  data: [ 0.0148655429818, -0.999880929698, 0.00414029679422, -0.0216401454975,
-#          0.999557249008, 0.0149672133247, 0.025715529948,  -0.064676986768,
-#          -0.0257744366974, 0.00375618835797, 0.999660727178, 0.00981073058949,
-#          0, 0, 0, 1 ]
-#
-#body_T_cam1: !!opencv-matrix
-#  rows: 4
-#  cols: 4
-#  dt: d
-#  data: [ 0.0125552670891, -0.999755099723, 0.0182237714554, -0.0198435579556,
-#          0.999598781151, 0.0130119051815, 0.0251588363115, 0.0453689425024,
-#          -0.0253898008918, 0.0179005838253, 0.999517347078, 0.00786212447038,
-#          0, 0, 0, 1 ]
 
 # raw image rectified, extrinsics recalibered by setting estimate_extrinsic to 1.
 body_T_cam0: !!opencv-matrix
@@ -63,10 +45,10 @@ prior_locate:
   fitness_threshold: 0.01
   reg_trans_threshold: 0.4
   var_factor: 1000
-  max_depth: 3
+  max_depth: 5
   validate_frames: 4
   depth_threshold: 0.1
-  pointcloud: "/home/lnex/pcd/V1_03_0.02.pcd"
+  pointcloud: "/home/lnex/pcd/V2_0.02.pcd"
   clip_range:
     x: 0.4
     y: 0.4
@@ -78,14 +60,14 @@ prior_locate:
     rows: 1
     cols: 3
     dt: f
-    data: [ 0.898029,2.028208,0.955711 ]
+    data: [ -1.053197,0.428061,1.332837 ]
   #quaternion in wxyz
   init_quat: !!opencv-matrix
     rows: 1
     cols: 4
     dt: f
-    data: [ 0.999, 0.0, 0.03, 0.03 ]
-
+    data: [ -0.0369, 0, 0, 0.9993 ]
+#    data: [0.026558,-0.795388,0.033950,-0.018650]
 #Multiple thread support
 multiple_thread: 1
 

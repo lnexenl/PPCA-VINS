@@ -48,7 +48,7 @@ prior_locate:
   max_depth: 3
   validate_frames: 4
   depth_threshold: 0.1
-  pointcloud: "/home/lnex/pcd/V1_01_0.02.pcd"
+  pointcloud: "/home/lnex/pcd/V2_0.02.pcd"
   clip_range:
     x: 0.4
     y: 0.4
@@ -60,14 +60,14 @@ prior_locate:
     rows: 1
     cols: 3
     dt: f
-    data: [ 0.515356,1.996773,0.971104 ]
+    data: [ -1.001979,0.479302,1.329542 ]
   #quaternion in wxyz
   init_quat: !!opencv-matrix
     rows: 1
     cols: 4
     dt: f
-    data: [ 0.97401282, -0.03768528, -0.01467218, -0.22285325 ]
-
+    data: [ -0.04605777, 0.01585294,  0.00544886,  0.99879812 ]
+#    data: [0.026558,-0.795388,0.033950,-0.018650]
 #Multiple thread support
 multiple_thread: 1
 

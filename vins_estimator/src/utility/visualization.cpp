@@ -157,6 +157,19 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header) {
               << tmp_Q.z() << " "
               << tmp_Q.w() << endl;
         foutC.close();
+        ofstream foutD(VINS_RESULT0_PATH, ios::app);
+        foutD << header.stamp.toNSec() << " ";
+        foutD.setf(ios::fixed, ios::floatfield);
+        foutD.precision(6);
+        foutD << estimator.Ps[WINDOW_SIZE].x() << " "
+              << estimator.Ps[WINDOW_SIZE].y() << " "
+              << estimator.Ps[WINDOW_SIZE].z() << " "
+              << tmp_Q.x() << " "
+              << tmp_Q.y() << " "
+              << tmp_Q.z() << " "
+              << tmp_Q.w() << endl;
+        foutD.close();
+
         Eigen::Vector3d tmp_T = estimator.Ps[WINDOW_SIZE];
         printf("time: %f, t: %f %f %f q: %f %f %f %f \n", header.stamp.toSec(), tmp_T.x(), tmp_T.y(), tmp_T.z(), tmp_Q.w(), tmp_Q.x(), tmp_Q.y(), tmp_Q.z());
     }

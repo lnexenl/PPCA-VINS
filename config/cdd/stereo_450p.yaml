@@ -10,7 +10,7 @@ gt_odom: "/airsim_node/car/odom_local_ned"
 imu_topic: "/airsim_node/car/imu/Imu"
 image0_topic: "/airsim_node/car/left/Scene_450p"
 image1_topic: "/airsim_node/car/right/Scene_450p"
-output_path: "/home/lnex/vins_out/1"
+output_path: "/home/lnex/vins_out/demo4"
 
 cam0_calib: "cam_450p.yaml"
 cam1_calib: "cam_450p.yaml"

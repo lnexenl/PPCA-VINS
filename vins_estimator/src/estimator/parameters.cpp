@@ -28,6 +28,7 @@ int ESTIMATE_TD;
 int ROLLING_SHUTTER;
 std::string EX_CALIB_RESULT_PATH;
 std::string VINS_RESULT_PATH;
+std::string VINS_RESULT0_PATH;
 std::string OUTPUT_FOLDER;
 std::string IMU_TOPIC;
 int ROW, COL;
@@ -121,6 +122,7 @@ void readParameters(std::string config_file) {
             break;
         }
     }
+    VINS_RESULT0_PATH = OUTPUT_FOLDER + "/vio_global_path.txt";
 
     std::cout << "result path " << VINS_RESULT_PATH << std::endl;
     std::ofstream fout(VINS_RESULT_PATH, std::ios::out);

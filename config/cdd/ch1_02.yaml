@@ -6,11 +6,11 @@ imu: 1
 num_of_cam: 2
 groundtruth: 1
 
-gt_odom: "/airsim_node/car/odom_local_ned"
-imu_topic: "/airsim_node/car/imu/Imu"
+gt_odom: "/airsim_node/uav/odom_local_ned"
+imu_topic: "/airsim_node/uav/imu/imu"
 image0_topic: "/airsim_node/car/left/Scene"
 image1_topic: "/airsim_node/car/right/Scene"
-output_path: "/home/lnex/dataset/changed1/01"
+output_path: "/home/lnex/dataset/changed1/02"
 
 cam0_calib: "cam_450p.yaml"
 cam1_calib: "cam_450p.yaml"
@@ -43,8 +43,8 @@ body_T_cam1: !!opencv-matrix
 
 #Stereo depth parameters
 prior_locate:
-  fitness_threshold: 0.5
-  reg_trans_threshold: 2.0
+  fitness_threshold: 1.0
+  reg_trans_threshold: 4.0
   var_factor: 20000
   max_depth: 50
   validate_frames: 4
@@ -61,13 +61,13 @@ prior_locate:
     rows: 1
     cols: 3
     dt: f
-    data: [ 0, 0, 0 ]
+    data: [ 0, 0, 15.13 ]
   #quaternion in wxyz
   init_quat: !!opencv-matrix
     rows: 1
     cols: 4
     dt: f
-    data: [ 1, 0, 0, 0 ]
+    data: [ 0.9977, 0, 0, 0.0681 ]
 
 
 

@@ -241,8 +241,7 @@ int main(int argc, char **argv) {
     ros::Subscriber sub_cam_switch = n.subscribe("/vins_cam_switch", 100, cam_switch_callback);
 
     if (PUB_GT) {
-        sub_gt_odom = n.subscribe("/airsim_node/car/odom_local_ned", 2000, gt_odom_callback,
-                                                  ros::TransportHints().tcpNoDelay());
+        sub_gt_odom = n.subscribe(GT_ODOM_TOPIC, 2000, gt_odom_callback, ros::TransportHints().tcpNoDelay());
 //        printf("GT_ODOM_TOPIC:%s\n", GT_ODOM_TOPIC.c_str());
     }
 

@@ -4,3 +4,6 @@
 [submodule "prior_locate/third_party/libSGM"]
 	path = prior_locate/third_party/libSGM
 	url = https://github.com/lnexenl/libSGM.git
+[submodule "PCCD_evaluation"]
+	path = PCCD_evaluation
+	url = https://github.com/lnexenl/PCCD_evaluation.git

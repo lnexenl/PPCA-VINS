@@ -1,0 +1,6 @@
+<launch>
+    <node name="plocate" pkg="prior_locate" type="prior_locate_node" launch-prefix="gdb -ex run --args">
+        <param name="priorMapFile" type="str" value="/home/lnex/pcd/prior/4x.pcd"/>
+        <param name="confFile" type="str" value="/home/lnex/work/vins/src/VINS-Fusion/config/stereo_450p.yaml"/>
+    </node>
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+    <node name="priorOptNode" pkg="prior_fusion" type="prior_fusion_node">
+        <param name="resultDir" type="str" value="/home/lnex/work/vins_res/1"/>
+    </node>
+</launch>

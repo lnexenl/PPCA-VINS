@@ -1,9 +1,6 @@
-[submodule "prior_locate"]
-	path = prior_locate
-	url = git@github.com:lnexenl/depth_pred.git
-[submodule "prior_fusion"]
-	path = prior_fusion
-	url = git@github.com:lnexenl/prior_fusion.git
 [submodule "fast_gicp"]
 	path = fast_gicp
 	url = https://github.com/lnexenl/fast_gicp.git
+[submodule "prior_locate/third_party/libSGM"]
+	path = prior_locate/third_party/libSGM
+	url = https://github.com/lnexenl/libSGM.git

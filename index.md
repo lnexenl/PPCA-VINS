@@ -29,14 +29,14 @@ Bags include groundtruth 6D pose, 30Hz stereo 800x450 color images, 200Hz IMU. A
 Directory pcd includes groundtruth point clouds.
 
 | Environment | Original | Changed1 | Changed2 |
-| :-----| ----: | :----: | :----: |
+| :-----:| :----: | :----: | :----: |
 | raw ground truth point cloud                   | pcd/origin/origin.pcd | pcd/changed1/changed1.pcd | pcd/changed2/changed2.pcd |
 | ground truth point cloud with resolution 0.1 m | pcd/origin/1x.pcd     | pcd/changed1/1x.pcd       | pcd/changed2/1x.pcd |
 | ground truth point cloud with resolution 0.2 m | pcd/origin/2x.pcd     | pcd/changed1/2x.pcd       | pcd/changed2/2x.pcd |
 | ground truth point cloud with resolution 0.4 m | pcd/origin/4x.pcd     | pcd/changed1/4x.pcd       | pcd/changed2/4x.pcd |
 | ground truth point cloud with resolution 0.8 m | pcd/origin/8x.pcd     | pcd/changed1/8x.pcd       | pcd/changed2/8x.pcd |
-| prior new points with resolution 0.4m                 | --------------------- | pcd/changed1/new.pcd      | pcd/changed2/new.pcd|
-| prior removed points with resolution 0.4m              | --------------------- | pcd/changed1/removed.pcd  | pcd/changed2/removed.pcd|
+| prior new points with resolution 0.4m                 |  | pcd/changed1/new.pcd      | pcd/changed2/new.pcd|
+| prior removed points with resolution 0.4m              |  | pcd/changed1/removed.pcd  | pcd/changed2/removed.pcd|
 
 ---
 

@@ -13,6 +13,7 @@ Details are in our paper.
 ## rosbag
 
 Directory bag includes rosbag used by our paper.
+
 - S1 and S2 means for Changed scene 1 and Changed scene 2.
 - car and mav means for vehicle used for bag record.
 
@@ -36,6 +37,7 @@ Directory pcd includes groundtruth point clouds.
 | ground truth point cloud with resolution 0.8 m | pcd/origin/8x.pcd     | pcd/changed1/8x.pcd       | pcd/changed2/8x.pcd |
 | prior new points with resolution 0.4m                 | --------------------- | pcd/changed1/new.pcd      | pcd/changed2/new.pcd|
 | prior removed points with resolution 0.4m              | --------------------- | pcd/changed1/removed.pcd  | pcd/changed2/removed.pcd|
+
 ---
 
 # Point cloud change detection baseline and evaluation
@@ -96,9 +98,13 @@ Note that **param** `output_path` and `pointcloud` in config_file should be modi
 `pointcloud` should be prior point cloud file. we use dataset/pcd/origin/4x.pcd file in our dataset as prior point cloud file.
 
 [config_file] is some file in PPCA-VINS/config directory.
+
 [bag_file] is the name of rosbag to be played.
+
 [start_trial_num] is the number of  should be an integer. For example, if 5 experiments have been conducted, then start_trial_num should be 6 at next run of this script.
+
 [trials_this_run] is the number of experiments that will be conducted at current run, should be an integer.
+
 [result_dir] should be same with the `output_path` parameter in [config_file].
 
 Before running the script, you should ensure that [result_dir] exists.
@@ -111,10 +117,15 @@ rosrun PCCD_evaluation build_global_pc_ot [result_dir] [prior_pointcloud_file] [
 rosrun PCCD_evaluation build_confusion_mat [result_dir] [trial_num] [trajectory_type] [free_cast_dist] [pc_min_dist]
 ```
 [result_dir] is same as that in previous section.
+
 [prior_pointcloud_file] is the prior point cloud to be compared.
+
 [trial_num] specifies which trial to be evaluated.
+
 [trajectory_type] can be prior or vio. Set to prior will use trajectory from our PPCA-VINS, set to vio will use trajectory from VINS-Fusion.
+
 [free_cast_dist] is the distance to cast in no depth area, which is $th_f$ in our paper. ***Explained in paper***
+
 [pc_min_dist] is the parameter $th_{ch}$ in our paper. ***Explained in paper***
 
 For example, to evaluate result in [result_dir]/2, with trajectory from PPCA-VINS, free cast distance of 20 meters, and $th_{ch}=2.4m$.

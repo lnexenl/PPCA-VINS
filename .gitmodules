@@ -6,4 +6,4 @@
 	url = git@github.com:lnexenl/prior_fusion.git
 [submodule "fast_gicp"]
 	path = fast_gicp
-	url = https://github.com/SMRT-AIST/fast_gicp.git
+	url = https://github.com/lnexenl/fast_gicp.git

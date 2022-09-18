@@ -4,10 +4,12 @@ project(prior_locate CXX CUDA)
 
 add_subdirectory(third_party/libSGM)
 #set(CMAKE_BUILD_TYPE Debug)
+
 set(CMAKE_PROJECT_VERSION 0.1.0)
 set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS "-std=c++17 -march=native -fPIC")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3  -g -Wall")
+# SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -g -Wall -ggdb")
 
 #set(CMAKE_CUDA_ARCHITECTURES "86")
 set(CUDA_SEPARABLE_COMPILATION ON)

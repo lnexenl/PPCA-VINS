@@ -7,7 +7,7 @@ num_of_cam: 2
 groundtruth: 1
 
 gt_odom: "/airsim_node/car/odom_local_ned"
-imu_topic: "/airsim_node/car/imu/Imu"
+imu_topic: "/airsim_node/car/imu/imu"
 image0_topic: "/airsim_node/car/left/Scene"
 image1_topic: "/airsim_node/car/right/Scene"
 output_path: "/home/lnex/dataset/test"

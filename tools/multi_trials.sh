@@ -16,50 +16,58 @@ end_tuns=$(($cnt+$runs-1))
 
 while [ $cnt -le $end_tuns ]
 do
-echo "the ${cnt} time run"
-echo "starting vins node"
-tmux new-session -d -s vins rosrun vins vins_node $config
-sleep 2
-echo "starting locating node"
-tmux new-session -d -s locate rosrun prior_locate prior_locate_node $config
-sleep 2
-echo "starting fusion node"
-tmux new-session -d -s fusion rosrun prior_fusion prior_fusion_node $config
-sleep 4
+    if [ -d "$result_dir/$cnt" ]
+    then
+        rm -r "$result_dir/$cnt"
+    fi
+
+    echo "the ${cnt} time run"
+    echo "starting vins node"
+    tmux new-session -d -s vins rosrun vins vins_node $config
+    sleep 2
+    echo "starting locating node"
+    tmux new-session -d -s locate rosrun prior_locate prior_locate_node $config
+    sleep 2
+    echo "starting fusion node"
+    tmux new-session -d -s fusion rosrun prior_fusion prior_fusion_node $config
+    sleep 2
+    echo "starting noise adder node"
+    tmux new-session -d -s adder roslaunch noise_adder small_noise.launch
+    sleep 4
 
 
-tmux new-session -d -s bag rosbag play ${bag}
-sleep 10
+    tmux new-session -d -s bag rosbag play ${bag}
+    sleep 10
 
-rosnode info /prior_locate_node >/dev/null 2>&1
-if [ $? -ne 0 ]
-then
-    echo "locating node failed"
-    rosnode kill /prior_locate_node /prior_opt_node /vins_estimator
-    rosnode kill `rosnode list | grep play`
+    rosnode info /prior_locate_node >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "locating node failed"
+        rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
+        rosnode kill `rosnode list | grep play`
+        tmux kill-server
+    #     killall screen
+        rm -r "$result_dir/$cnt"
+        continue
+    fi
+
+    echo "waiting for bag end"
+    sleep $((5+$bagtime))
+
+    rosnode info /prior_locate_node >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "locating node failed"
+        rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
+        rosnode kill `rosnode list | grep play`
+        tmux kill-server
+    #     killall screen
+        rm -r "$result_dir/$cnt"
+        continue
+    fi
+
     tmux kill-server
-#     killall screen
-    rm -r "$result_dir/$cnt"
-    continue
-fi
-
-echo "waiting for bag end"
-sleep $((30+$bagtime))
-
-rosnode info /prior_locate_node >/dev/null 2>&1
-if [ $? -ne 0 ]
-then
-    echo "locating node failed"
-    rosnode kill /prior_locate_node /prior_opt_node /vins_estimator
-    rosnode kill `rosnode list | grep play`
-    tmux kill-server
-#     killall screen
-    rm -r "$result_dir/$cnt"
-    continue
-fi
-
-tmux kill-server
-# killall screen
-sleep 5
-cnt=$(($cnt+1))
+    # killall screen
+    sleep 5
+    cnt=$(($cnt+1))
 done

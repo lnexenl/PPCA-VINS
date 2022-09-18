@@ -6,23 +6,31 @@
 *******************************************************/
 
 #include "locater.h"
-
+#include <csignal>
+#include <boost/stacktrace.hpp>
 //std::queue<sensor_msgs::ImageConstPtr> img0, img1;
+
+
 
 Eigen::Vector3f TIC;
 std::string resultDir;
 ros::Publisher transformd_pc_pub;
 
+void signal_handler(int sig) {
+    ::signal(sig, SIG_DFL);
+    boost::stacktrace::safe_dump_to("./backtrace.dump");
+    ::raise(SIGABRT);
+}
+
 int main(int argc, char** argv) {
+    std::signal(SIGSEGV, &signal_handler);
 
     ros::init(argc, argv, "prior_locate_node");
     ros::NodeHandle n("~");
     std::string priorMapFile, confFile;
 
     PointCloudXYZ::Ptr PCPtr(new PointCloudXYZ);
-    //    n.getParam("priorMapFile", priorMapFile);
     n.getParam("confFile", confFile);
-    //    priorMapFile = "/home/lnex/KITTI/dataset/kitti_sequence_00.pcd";
     confFile = argv[1];
     Locater locater(confFile);
     resultDir = locater.resultDir;

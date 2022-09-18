@@ -48,7 +48,7 @@ public:
 
     void loadYAML(std::string confFile);
 
-    void depth_vis();
+    // void depth_vis();
 
     void update_depth(sgm::StereoSGM& s);
 

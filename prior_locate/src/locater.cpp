@@ -78,7 +78,7 @@ void Locater::loadYAML(std::string confFile) {
     fsSettings.release();
     camSettings.release();
 }
-void Locater::depth_vis() {
+/* void Locater::depth_vis() {
     PointCloudXYZ pclpc;
     sensor_msgs::PointCloud2 pc;
     for (uint64_t i = 0; i < dkf.rbegin()->worldPC->size(); i += 20) {
@@ -90,7 +90,7 @@ void Locater::depth_vis() {
     pc.header.frame_id = "world";
     pc.header.stamp = dkf.rbegin()->stamp;
     local_pc_pub.publish(pc);
-}
+} */
 void Locater::update_depth(sgm::StereoSGM& s) {
     int cur_depthid = 0;
     while (!ros::isShuttingDown()) {
@@ -151,7 +151,9 @@ void Locater::insert_depthKF() {
             dKeyframe tmpdkf(WIDTH, HEIGHT, FX, FY, CX, CY, DEPTH_TH, VAL_FRAME, MAX_DEPTH, BASELINE_LEN, resultDir);
             tmpdkf.setVioRT(msg->header.stamp, vioPath);
             tmpdkf.depth2world(msg, RIC, TIC);
+            mDKF.lock();
             dkf.push_back(tmpdkf);
+            mDKF.unlock();
             //                depth_vis();
             depthBuf.pop();
         }
@@ -159,15 +161,14 @@ void Locater::insert_depthKF() {
 }
 void Locater::temporal_filter() {
     int ndtCnt = 0;
-    std::size_t s = 0;
     while (!ros::isShuttingDown()) {
-//                                ROS_INFO("DKF SIZE:%zu", dkf.size());
-        s = dkf.size() + 1;
-        if (int(s) >= 8) {
-            ROS_ASSERT(dkf.size() >= (std::size_t) 7);
+        // ROS_INFO("DKF SIZE:%zu", dkf.size());
+        mDKF.lock();
+        if (int(dkf.size()) >= 7) {
+            ROS_ASSERT(dkf.size() >= 7);
             if (filter_stamp < dkf[3].stamp) {
                 filter_stamp = dkf[3].stamp;
-                for (auto i = 1; i <= 5; ++i) {
+                for (int i = 1; i <= 5; ++i) {
                     if (i == 3)
                         continue;
                     dkf[i].proj2KF(dkf[3], RIC_inv, TIC);
@@ -189,6 +190,7 @@ void Locater::temporal_filter() {
                 ndtCnt++;
             }
         }
+        mDKF.unlock();
     }
 }
 void Locater::align() {

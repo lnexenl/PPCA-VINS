@@ -1,0 +1,12 @@
+<launch>
+    <node name="noise_adder" pkg="noise_adder" type="noise_adder_node" >
+        <param name="~gyroscope_noise_density" type="double" value="0.004" />
+        <param name="~gyroscope_random_walk" type="double" value="0.0004" />
+        <param name="~accelerometer_noise_density" type="double" value="0.03" />
+        <param name="~accelerometer_random_walk" type="double" value="0.003" />
+        <param name="~img_noise_density" type="double" value="10.2"/>
+        <param name="~img0_topic" type="str" value="/airsim_node/uav/left/Scene" />
+        <param name="~img1_topic" type="str" value="/airsim_node/uav/right/Scene" />
+        <param name="~imu_topic" type="str" value="/airsim_node/uav/imu/imu" />
+    </node>
+</launch>

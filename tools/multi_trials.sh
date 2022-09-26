@@ -32,39 +32,39 @@ do
     tmux new-session -d -s fusion rosrun prior_fusion prior_fusion_node $config
     sleep 2
     echo "starting noise adder node"
-    tmux new-session -d -s adder roslaunch noise_adder small_noise.launch
+    tmux new-session -d -s adder roslaunch noise_adder big_noise.launch
     sleep 4
 
 
     tmux new-session -d -s bag rosbag play ${bag}
     sleep 10
 
-    rosnode info /prior_locate_node >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "locating node failed"
-        rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
-        rosnode kill `rosnode list | grep play`
-        tmux kill-server
-    #     killall screen
-        rm -r "$result_dir/$cnt"
-        continue
-    fi
+#     rosnode info /prior_locate_node >/dev/null 2>&1
+#     if [ $? -ne 0 ]
+#     then
+#         echo "locating node failed"
+#         rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
+#         rosnode kill `rosnode list | grep play`
+#         tmux kill-server
+#     #     killall screen
+#         rm -r "$result_dir/$cnt"
+#         continue
+#     fi
 
     echo "waiting for bag end"
     sleep $((5+$bagtime))
 
-    rosnode info /prior_locate_node >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "locating node failed"
-        rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
-        rosnode kill `rosnode list | grep play`
-        tmux kill-server
-    #     killall screen
-        rm -r "$result_dir/$cnt"
-        continue
-    fi
+#     rosnode info /prior_locate_node >/dev/null 2>&1
+#     if [ $? -ne 0 ]
+#     then
+#         echo "locating node failed"
+#         rosnode kill /prior_locate_node /prior_opt_node /vins_estimator /noise_adder
+#         rosnode kill `rosnode list | grep play`
+#         tmux kill-server
+#     #     killall screen
+#         rm -r "$result_dir/$cnt"
+#         continue
+#     fi
 
     tmux kill-server
     # killall screen

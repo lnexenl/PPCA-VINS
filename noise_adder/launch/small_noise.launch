@@ -4,6 +4,7 @@
         <param name="~gyroscope_random_walk" type="double" value="0.00004" />
         <param name="~accelerometer_noise_density" type="double" value="0.003" />
         <param name="~accelerometer_random_walk" type="double" value="0.0003" />
+        <param name="~img_noise_density" type="double" value="5.10"/>
         <param name="~img0_topic" type="str" value="/airsim_node/uav/left/Scene" />
         <param name="~img1_topic" type="str" value="/airsim_node/uav/right/Scene" />
         <param name="~imu_topic" type="str" value="/airsim_node/uav/imu/imu" />

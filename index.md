@@ -1,5 +1,8 @@
 # Point Cloud Change Detection With Stereo V-SLAM: Dataset, Metrics and Baseline
 ### This is the project website of our paper: ***Point Cloud Change Detection With Stereo V-SLAM:Dataset, Metrics and Baseline***: [arxiv](https://arxiv.org/abs/2207.00246)
+
+## **Revised version of the dataset will be updated later, currently I cannot access my work PC due to Binhai New Area's COVID prevention policy.**
+
 ### Our dataset can be downloaded at: [dataset](https://cloud.tsinghua.edu.cn/d/ae795cd533aa4d7a8256/)
 
 We build three environments in Unreal Engine 4 to collect data: original environment, changed environment 1 and 2, difference between environments are shown in following image:

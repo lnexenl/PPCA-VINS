@@ -53,6 +53,7 @@ FeatureTracker::FeatureTracker() {
     hasPrediction = false;
 }
 
+/// @brief set ROI of new image.
 void FeatureTracker::setMask() {
     mask = cv::Mat(row, col, CV_8UC1, cv::Scalar(255));
 
@@ -62,6 +63,7 @@ void FeatureTracker::setMask() {
     for (unsigned int i = 0; i < cur_pts.size(); i++)
         cnt_pts_id.push_back(make_pair(track_cnt[i], make_pair(cur_pts[i], ids[i])));
 
+    // sort with track_cnt(frames tracked to make features tracked for long time will be placed at the center of ROI circle)
     sort(cnt_pts_id.begin(), cnt_pts_id.end(),
          [](const pair<int, pair<cv::Point2f, int>> &a, const pair<int, pair<cv::Point2f, int>> &b) {
              return a.first > b.first;
@@ -88,6 +90,8 @@ double FeatureTracker::distance(cv::Point2f &pt1, cv::Point2f &pt2) {
     return sqrt(dx * dx + dy * dy);
 }
 
+/// @brief track images using LK optical flow
+/// @return map<feature_id, vector<pair<camera_id, undistorted_pts.xyz, distorted_pts.uv, pts.velocity.uv>>> 
 map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>>
 FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat &_img1) {
     TicToc t_r;
@@ -111,7 +115,9 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
         vector<uchar> status;
         vector<float> err;
         if (hasPrediction) {
-            // predicted optical flow. assuming small move(pyramid max level 1), use OPTIFLOW_USE_INITIAL_FLOW to calculate initial flow with prevpts and nextpts. two arrays must have same size.
+            /* predicted optical flow. assuming small move(pyramid max level 1), use OPTIFLOW_USE_INITIAL_FLOW to calculate initial flow with prevpts and nextpts. 
+            two arrays must have same size.*/
+            //use flow from previous frame as an initial guess of current frame.
             cur_pts = predict_pts;
             cv::calcOpticalFlowPyrLK(prev_img, cur_img, prev_pts, cur_pts, status, err, cv::Size(21, 21), 1,
                                      cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, 30, 0.01),
@@ -136,7 +142,7 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
                                      cv::OPTFLOW_USE_INITIAL_FLOW);
             //cv::calcOpticalFlowPyrLK(cur_img, prev_img, cur_pts, reverse_pts, reverse_status, err, cv::Size(21, 21), 3); 
             for (size_t i = 0; i < status.size(); i++) {
-                if (status[i] && reverse_status[i] && distance(prev_pts[i], reverse_pts[i]) <= 0.5) {
+                if (status[i] && reverse_status[i] && distance(prev_pts[i], reverse_pts[i]) <= 0.5) { // If points after reverse_flow have distance > 0.5, then consider these points as outliers.
                     status[i] = 1;
                 } else
                     status[i] = 0;
@@ -146,6 +152,9 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
         for (int i = 0; i < int(cur_pts.size()); i++)
             if (status[i] && !inBorder(cur_pts[i]))
                 status[i] = 0;
+
+
+        // remove outliers.
         reduceVector(prev_pts, status);
         reduceVector(cur_pts, status);
         reduceVector(ids, status);
@@ -233,8 +242,13 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
         }
         prev_un_right_pts_map = cur_un_right_pts_map;
     }
-    if (SHOW_TRACK)
+    if (SHOW_TRACK) {
+        // prevLeftPtsMap is only for track visualization.
+        prevLeftPtsMap.clear();
+        for (size_t i = 0; i < cur_pts.size(); i++)
+            prevLeftPtsMap[ids[i]] = cur_pts[i];
         drawTrack(cur_img, rightImg, ids, cur_pts, cur_right_pts, prevLeftPtsMap);
+    }
 
     prev_img = cur_img;
     prev_pts = cur_pts;
@@ -243,9 +257,7 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
     prev_time = cur_time;
     hasPrediction = false;
 
-    prevLeftPtsMap.clear();
-    for (size_t i = 0; i < cur_pts.size(); i++)
-        prevLeftPtsMap[ids[i]] = cur_pts[i];
+
 
     map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> featureFrame;
     for (size_t i = 0; i < ids.size(); i++) {
@@ -267,7 +279,7 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
         featureFrame[feature_id].emplace_back(camera_id, xyz_uv_velocity);
     }
 
-    if (!_img1.empty() && stereo_cam) {
+    if (!_img1.empty() && stereo_cam) { // stereo
         for (size_t i = 0; i < ids_right.size(); i++) {
             int feature_id = ids_right[i];
             double x, y, z;
@@ -333,6 +345,10 @@ void FeatureTracker::readIntrinsicParameter(const vector<string> &calib_file) {
         stereo_cam = 1;
 }
 
+/**
+ * @brief show undistorted images, unused in released code.
+ * 
+ */
 void FeatureTracker::showUndistortion(const string &name) {
     cv::Mat undistortedImg(row + 600, col + 600, CV_8UC1, cv::Scalar(0));
     vector<Eigen::Vector2d> distortedp, undistortedp;
@@ -366,6 +382,11 @@ void FeatureTracker::showUndistortion(const string &name) {
     // cv::waitKey(0);
 }
 
+
+/// @brief function undistorting points. 
+/// @param pts input distorted points
+/// @param cam camera model
+/// @return distorted points in format of vector<cv::Point2f>
 vector<cv::Point2f> FeatureTracker::undistortedPts(vector<cv::Point2f> &pts, camodocal::CameraPtr cam) {
     vector<cv::Point2f> un_pts;
     for (unsigned int i = 0; i < pts.size(); i++) {
@@ -377,6 +398,13 @@ vector<cv::Point2f> FeatureTracker::undistortedPts(vector<cv::Point2f> &pts, cam
     return un_pts;
 }
 
+///
+/// @brief calculate velocity of points from calcOpticalFlowPyrLK
+/// 
+/// @param ids point ids of points to calculate velocity
+/// @param pts 
+/// @param cur_id_pts current points with id in ids. Will be recalculated in this function.
+/// @param prev_id_pts previous points with id in ids.
 vector<cv::Point2f> FeatureTracker::ptsVelocity(vector<int> &ids, vector<cv::Point2f> &pts,
                                                 map<int, cv::Point2f> &cur_id_pts, map<int, cv::Point2f> &prev_id_pts) {
     vector<cv::Point2f> pts_velocity;
@@ -457,7 +485,7 @@ void FeatureTracker::drawTrack(const cv::Mat &imLeft, const cv::Mat &imRight,
     //cv::resize(imCur2, imCur2Compress, cv::Size(cols, rows / 2));
 }
 
-
+/// @brief project predicted points to image plane and predict velocity
 void FeatureTracker::setPrediction(map<int, Eigen::Vector3d> &predictPts) {
     hasPrediction = true;
     predict_pts.clear();

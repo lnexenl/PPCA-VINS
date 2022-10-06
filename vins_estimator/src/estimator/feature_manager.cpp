@@ -268,7 +268,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
         if (it_per_id.estimated_depth > 0)
             continue;
 
-        if (STEREO && it_per_id.feature_per_frame[0].is_stereo) {
+        if (STEREO && it_per_id.feature_per_frame[0].is_stereo) { // triangulate between stereo cams
             int imu_i = it_per_id.start_frame;
             Eigen::Matrix<double, 3, 4> leftPose;
             Eigen::Vector3d t0 = Ps[imu_i] + Rs[imu_i] * tic[0];
@@ -305,7 +305,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
                                                             ptsGt.x(), ptsGt.y(), ptsGt.z());
             */
             continue;
-        } else if (it_per_id.feature_per_frame.size() > 1) {
+        } else if (it_per_id.feature_per_frame.size() > 1) { // triangulate between frames.
             int imu_i = it_per_id.start_frame;
             Eigen::Matrix<double, 3, 4> leftPose;
             Eigen::Vector3d t0 = Ps[imu_i] + Rs[imu_i] * tic[0];
@@ -340,7 +340,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             continue;
         }
         it_per_id.used_num = it_per_id.feature_per_frame.size();
-        if (it_per_id.used_num < 4)
+        if (it_per_id.used_num < 4) // when feature is tracked for >= 4 frames, then estimate the depth of the feature using all these frames.
             continue;
 
         int imu_i = it_per_id.start_frame, imu_j = imu_i - 1;
@@ -364,7 +364,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             Eigen::Matrix<double, 3, 4> P;
             P.leftCols<3>() = R.transpose();
             P.rightCols<1>() = -R.transpose() * t;
-            Eigen::Vector3d f = it_per_frame.point.normalized();
+            Eigen::Vector3d f = it_per_frame.point.normalized(); // normalize to make points in each frame contribute equally to final result.
             svd_A.row(svd_idx++) = f[0] * P.row(2) - f[2] * P.row(0);
             svd_A.row(svd_idx++) = f[1] * P.row(2) - f[2] * P.row(1);
 

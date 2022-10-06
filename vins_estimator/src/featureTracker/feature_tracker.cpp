@@ -176,8 +176,7 @@ FeatureTracker::trackImage(double _cur_time, const cv::Mat &_img, const cv::Mat 
         ROS_DEBUG("detect feature begins");
         TicToc t_t;
         int n_max_cnt = MAX_CNT - static_cast<int>(cur_pts.size());
-        if (n_max_cnt >
-            0) // if num of feature points is less than max feature num, use goodFeaturesToTrack to fulfill the features.
+        if (n_max_cnt > 0) // if num of feature points is less than max feature num, use goodFeaturesToTrack to fulfill the features.
         {
             if (mask.empty())
                 cout << "mask is empty " << endl;

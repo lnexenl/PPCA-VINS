@@ -13,6 +13,9 @@
 
 
 namespace cv {
+    ///
+    /// @brief SVD solve E Matrix.
+    /// 
     void decomposeEssentialMat(InputArray _E, OutputArray _R1, OutputArray _R2, OutputArray _t) {
 
         Mat E = _E.getMat().reshape(1, 3);
@@ -37,6 +40,12 @@ namespace cv {
         t.copyTo(_t);
     }
 
+    ///
+    /// @brief recover pose using E Matrix. Check depth of image points to determine which result is best.
+    /// 
+    /// @param _R output rotation
+    /// @param _t output translation
+    /// @return inline points' number 
     int recoverPose(InputArray E, InputArray _points1, InputArray _points2, InputArray _cameraMatrix,
                     OutputArray _R, OutputArray _t, InputOutputArray _mask) {
 

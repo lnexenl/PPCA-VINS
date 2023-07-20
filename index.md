@@ -3,7 +3,7 @@
 
 ## **Revised version of the dataset will be updated later, currently I cannot access my work PC due to Binhai New Area's COVID prevention policy.**
 
-### Our dataset can be downloaded at: [dataset](https://cloud.tsinghua.edu.cn/d/ae795cd533aa4d7a8256/)
+### Our dataset can be downloaded at: [dataset]([https://cloud.tsinghua.edu.cn/d/ae795cd533aa4d7a8256/](https://1drv.ms/f/s!AvG2wFfXyBQMioEZfx6VZB-AaDn0OQ?e=Ww4fBS))
 
 We build three environments in Unreal Engine 4 to collect data: original environment, changed environment 1 and 2, difference between environments are shown in following image:
 
@@ -19,28 +19,19 @@ Details are in our paper.
 Directory bag includes rosbag used by our paper.
 
 - S1 and S2 means for Changed scene 1 and Changed scene 2.
-- car and mav means for vehicle used for bag record.
+- dark has same scene as S1, but with dark illumination.
+- mirror has same scene as S1, but with some mirrors.
 
 Trajectories of bags are shown in following image:
 <img src="imgs/trajs.png" width="600"/>
   
-Note that S2_car bag is too big, you should unzip S2_car.zip to get the bag.
 
-Bags include groundtruth 6D pose, 30Hz stereo 800x450 color images, 200Hz IMU. All of these data are without noise.
+
+Bags include groundtruth 6D pose, 30Hz stereo 800x450 color images, 200Hz IMU. All of these data are noiseless.
 
 ## point cloud
 
-Directory pcd includes groundtruth point clouds.
-
-| Environment | Original | Changed1 | Changed2 |
-| :-----:| :----: | :----: | :----: |
-| raw ground truth point cloud                   | pcd/origin/origin.pcd | pcd/changed1/changed1.pcd | pcd/changed2/changed2.pcd |
-| ground truth point cloud with resolution 0.1 m | pcd/origin/1x.pcd     | pcd/changed1/1x.pcd       | pcd/changed2/1x.pcd |
-| ground truth point cloud with resolution 0.2 m | pcd/origin/2x.pcd     | pcd/changed1/2x.pcd       | pcd/changed2/2x.pcd |
-| ground truth point cloud with resolution 0.4 m | pcd/origin/4x.pcd     | pcd/changed1/4x.pcd       | pcd/changed2/4x.pcd |
-| ground truth point cloud with resolution 0.8 m | pcd/origin/8x.pcd     | pcd/changed1/8x.pcd       | pcd/changed2/8x.pcd |
-| prior new points with resolution 0.4m                 |  | pcd/changed1/new.pcd      | pcd/changed2/new.pcd|
-| prior removed points with resolution 0.4m              |  | pcd/changed1/removed.pcd  | pcd/changed2/removed.pcd|
+In each environment's directory, there are two point clouds: new.pcd and removed.pcd. These are groundtruth point clouds for new point clouds and removed point clouds in these environments. Point clouds are downsampled to 0.4m.
 
 ---
 
@@ -134,7 +125,6 @@ rosrun PCCD_evaluation build_confusion_mat [result_dir] [trial_num] [trajectory_
 
 For example, to evaluate result in [result_dir]/2, with trajectory from PPCA-VINS, free cast distance of 20 meters, and $th_{ch}=2.4m$.
 
-Besides, we use dataset/pcd/origin/4x.pcd file in our dataset as prior point cloud file.
 
 ```bash
 rosrun PCCD_evaluation build_global_pc_ot [result_dir] [prior_pointcloud_file] 2 prior 20

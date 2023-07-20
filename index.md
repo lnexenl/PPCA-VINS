@@ -3,7 +3,7 @@
 
 ## Latest version of dataset is released. ##
 
-### Our dataset can be downloaded at: [dataset]([https://cloud.tsinghua.edu.cn/d/ae795cd533aa4d7a8256/](https://1drv.ms/f/s!AvG2wFfXyBQMioEZfx6VZB-AaDn0OQ?e=Ww4fBS))
+### Our dataset can be downloaded at: [dataset](https://1drv.ms/f/s!AvG2wFfXyBQMioEZfx6VZB-AaDn0OQ?e=Ww4fBS)
 
 We build three environments in Unreal Engine 4 to collect data: original environment, changed environment 1 and 2, difference between environments are shown in following image:
 

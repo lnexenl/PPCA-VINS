@@ -1,7 +1,7 @@
 # Point Cloud Change Detection With Stereo V-SLAM: Dataset, Metrics and Baseline
 ### This is the project website of our paper: ***Point Cloud Change Detection With Stereo V-SLAM:Dataset, Metrics and Baseline***: [arxiv](https://arxiv.org/abs/2207.00246)
 
-## **Revised version of the dataset will be updated later, currently I cannot access my work PC due to Binhai New Area's COVID prevention policy.**
+## Latest version of dataset is released. ##
 
 ### Our dataset can be downloaded at: [dataset]([https://cloud.tsinghua.edu.cn/d/ae795cd533aa4d7a8256/](https://1drv.ms/f/s!AvG2wFfXyBQMioEZfx6VZB-AaDn0OQ?e=Ww4fBS))
 
